@@ -1,6 +1,6 @@
 {
-  "name": "YOUR APP NAME HERE",
-  "description": "YOUR APP'S DESCRIPTION HERE",
+  "name": "hotplate-starter-kit",
+  "description": "PLACEHOLDER YOUR APP'S DESCRIPTION HERE",
   "version": "0.0.1",
   "private": false,
   "dependencies": {
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "test-api.sh"
+    "test": "run_tests.sh"
   },
   "devDependencies": {
     "nodeunit": "~0.9.1",

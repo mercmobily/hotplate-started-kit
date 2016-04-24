@@ -35,8 +35,8 @@ var app = exports = module.exports = express();
 // They all get meaninful defaults (even appName)
 app.set('appName', process.env.APPNAME || 'placeholderName' );
 app.set('dbHost', process.env.DBHOST || 'localhost' );
-app.set('dbName', process.env.DBNAME || app.get('appName') + '_' + app.get('env');
-app.set('ipaddress', process.env.IPADDRESS || 'localhost');
+app.set('dbName', process.env.DBNAME || ( app.get('appName') + '_' + app.get('env') ) );
+app.set('ipAddress', process.env.IPADDRESS || 'localhost');
 app.set('port', process.env.PORT || 8080);
 
 // Basic app configuration in convenient module variables
@@ -44,7 +44,7 @@ var env = app.get('env');
 var appName = app.get('appName');
 var dbHost = app.get('dbHost');
 var dbName = app.get('dbName');
-var ipaddress = app.get('ipaddress');
+var ipAddress = app.get('ipAddress');
 var port = app.get('port');
 
 // Useful to get the full stack for debugging purposes
@@ -55,7 +55,16 @@ if( env == 'development') {
 // Connect to the DB
 var mongoParameters = 'autoReconnect=true&socketTimeoutMS=10000&keepAlive=1';
 var mongoUrl = `mongodb://${dbHost}/${dbName}?${mongoParameters}`;
-mongodb.MongoClient.connect( mongoUrl, mongoOptions, function( err, db ){
+
+console.log( "mongoUrl:", mongoUrl );
+console.log( "env:", env );
+console.log( "apName:", appName );
+console.log( "dbHost:", dbHost );
+console.log( "dbName:", dbName );
+console.log( "ipAddress:", ipAddress );
+console.log( "port:", port );
+
+mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
 
   // The connection is 100% necessary
   if( err ){
@@ -167,7 +176,7 @@ mongodb.MongoClient.connect( mongoUrl, mongoOptions, function( err, db ){
         // Business as usual: create the server, listen to the port
         } else {
           var server = http.createServer( app );
-          server.listen( app.get('port'), app.get('ipaddress'), function(){
+          server.listen( app.get('port'), app.get('ipAddress'), function(){
             console.log("Express server listening on port " + app.get('port'));
           });
         }
