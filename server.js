@@ -30,8 +30,6 @@ var dummy
 // Make up the express object `app`
 var app = exports = module.exports = express();
 
-console.log("ENV WITHIN THE APP:", app.get('env') );
-
 // Basic app configuration
 // Meaningful variables: APPNAME, DBHOST, DBNAME, IPADDRESS, PORT
 // They all get meaninful defaults (even appName)
@@ -58,8 +56,9 @@ if( env == 'development') {
 var mongoParameters = 'autoReconnect=true&socketTimeoutMS=10000&keepAlive=1';
 var mongoUrl = `mongodb://${dbHost}/${dbName}?${mongoParameters}`;
 
-console.log( "mongoUrl:", mongoUrl );
+console.log("Server started. Parameters:" );
 console.log( "env:", env );
+console.log( "mongoUrl:", mongoUrl );
 console.log( "apName:", appName );
 console.log( "dbHost:", dbHost );
 console.log( "dbName:", dbName );

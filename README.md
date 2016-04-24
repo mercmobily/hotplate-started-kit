@@ -5,5 +5,7 @@ This package is all you need to have a fully configured, fully functional node a
 It includes:
 
 * Example server with all you need to get started straight away
-* Handy environment variables depending on deployment type (production, development)
-* Example stores already defined
+* Handy environment variables which depend on which branch you are on (`master` means `development`, `production` means `production`)
+* Example stores already defined within a `main.js` file
+* Ready to accept login via Facebook and username/password pair
+* Password recovery URL/page already implemented

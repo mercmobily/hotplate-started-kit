@@ -28,5 +28,3 @@ export IPADDRESS='localhost'
 # Actually run the server
 /usr/bin/sudo -u $FOREVERUSERNAME forever start -a --watch --watchDirectory `pwd` --killSignal=SIGTERM -l /var/log/$APPNAME-forever.log -o /var/log/$APPNAME-out.log -e /var/log/$APPNAME-err.log server.js
 
-
-#/usr/bin/sudo -u $FOREVERUSERNAME node server.js
