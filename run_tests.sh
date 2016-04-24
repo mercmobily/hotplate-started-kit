@@ -16,7 +16,7 @@ fi
 
 # Export the usual story
 export DBHOST='localhost'
-export DBNAME="${APPNAME}_tests"
+export DBNAME="${APPNAME}-tests"
 export IPADDRESS='localhost'
 export PORT='8082'
 

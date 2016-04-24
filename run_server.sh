@@ -22,9 +22,10 @@ fi
 echo NODE_ENV: $NODE_ENV
 
 export DBHOST='localhost'
-export DBNAME="${APPNAME}_${NODE_ENV}"
+export DBNAME="${APPNAME}-${NODE_ENV}"
 export IPADDRESS='localhost'
 
 # Actually run the server
-/usr/bin/sudo -u $FOREVERUSERNAME forever start -a --watch --watchDirectory `pwd` --killSignal=SIGTERM -l /var/log/$APPNAME-forever.log -o /var/log/$APPNAME-out.log -e /var/log/$APPNAME-err.log server.js
+LP="${APPNAME}-${NODE_ENV}"
+/usr/bin/sudo -u $FOREVERUSERNAME forever start -a --watch --watchDirectory `pwd` --killSignal=SIGTERM -l /var/log/$LP-forever.log -o /var/log/$LP-out.log -e /var/log/$LP-err.log server.js
 

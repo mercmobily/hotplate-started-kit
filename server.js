@@ -52,7 +52,7 @@ if( env == 'development') {
   Error.stackTraceLimit = Infinity;
 }
 
-// Connect to the DB
+// Define the mongoUrl
 var mongoParameters = 'autoReconnect=true&socketTimeoutMS=10000&keepAlive=1';
 var mongoUrl = `mongodb://${dbHost}/${dbName}?${mongoParameters}`;
 
@@ -65,13 +65,14 @@ console.log( "dbName:", dbName );
 console.log( "ipAddress:", ipAddress );
 console.log( "port:", port );
 
+// Connect to the DB
 mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
 
   // The connection is 100% necessary
   if( err ){
     hotplate.logger.error("Could not connect to the database. Aborting. Error: ", err );
     process.exit( 1 );
-  }
+
 
   // Basic Hotplate setup. `routeUrlsPrefix` nees to be set here
   // since it might be used in modules at load-time
