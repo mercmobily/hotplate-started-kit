@@ -1,0 +1,24 @@
+<%- include partials/header.ejs %>
+
+    <div style="height: 200px; margin: 30px;padding: 10px;border-width: 2px;border-style: solid">
+  <%if( data && data.allDone ){ %>
+
+      <p style="font-size:30px;">
+        Your password was reset!
+      </p>
+
+
+  <% } else { %>
+      <p style="font-size:30px;">
+      Please type your new password!
+    </p>
+
+    <form action='/auth/resetPassword' method="POST">
+      <input name="password" type="password">
+    </form>
+
+  <% } %>
+
+    </div>
+
+<%- include partials/footer.ejs %>

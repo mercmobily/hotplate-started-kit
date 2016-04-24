@@ -1,0 +1,40 @@
+{
+  "name": "YOUR APP NAME HERE",
+  "description": "YOUR APP'S DESCRIPTION HERE",
+  "version": "0.0.1",
+  "private": false,
+  "dependencies": {
+    "hotplate": "0.3.x",
+    "allhttperrors": "0.3.x",
+    "jsonreststores": "0.3.x",
+    "simpledeclare": "0.3.x",
+    "simpleschema": "0.3.x",
+    "simpledblayer": "0.3.x",
+    "simpledblayer-mongo": "0.3.x",
+    "simpleschema-mongo": "0.3.x",
+    "express": "~4.13.4",
+    "serve-favicon": "~2.3.0",
+    "cookie-parser": "~1.4.1",
+    "cookie-session": "~1.1.0",
+    "body-parser": "~1.15.0",
+    "passport": "~0.3.2",
+    "mongodb": "~2.1.x",
+    "debug": "~2.2.0",
+    "morgan": "~1.7.0",
+    "async": "~1.5.2",
+    "multer":"~1.1.0",
+    "ejs":"~2.4.x",
+    "nodemailer":"~2.3.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "test-api.sh"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.9.1",
+    "supertest": "~1.2.X"
+  },
+  "engines": {
+    "node": "4.x"
+  }
+}

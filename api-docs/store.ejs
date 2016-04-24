@@ -1,0 +1,199 @@
+<h1><%=s['storeName']%></h1>
+
+<p>
+  <%=s['main-doc'] || "No description for this store" %>
+</p>
+
+<h2>URLs</h2>
+
+<% if( s.hasMethods ){ %>
+
+  <p>
+    The store accepts the following URLs:
+  </p>
+
+  <% Object.keys( s['methods'] ).forEach( function( methodName ) {
+     var methodInfo = s['methods'][ methodName ];
+     var outputMethodName = methodName.toUpperCase();
+     outputMethodName = outputMethodName == 'GETQUERY' ? 'GET' : outputMethodName %>
+
+    <ul>
+      <li>
+        <p>
+          <span class="method"><%=outputMethodName%></span><span class="url">http://HOSTNAME<%=methodInfo.url%></span>
+        </p>
+      </li>
+    </ul>
+  <% }) %>
+
+  <% if( Object.keys( s.singleFields ).length ){ %>
+
+    <p>
+      The store has the following single fields:
+    </p>
+
+    <% Object.keys( s.singleFields ).forEach( function( singleField ) { %>
+      <ul>
+        <li>
+          <p>
+            <span class="single-field-name"><%=singleField%></span>
+          </p>
+
+          <!-- Generated URLs for single fields -->
+          <ul>
+            <li>
+              <p>
+                <span class="method">GET</span><span class="url">http://HOSTNAME<%=s.fullPublicURL%>/<%=singleField%></span>
+              </p>
+              <p>
+                <span class="method">PUT</span><span class="url">http://HOSTNAME<%=s.fullPublicURL%>/<%=singleField%></span>
+              </p>
+            </li>
+          </ul>
+
+        </li>
+      </ul>
+    <% }) %>
+
+  <% } %>
+
+<% } else { %>
+  <p>
+    The store doesn't expose any public URLs.
+  </p>
+<% } %>
+
+<h2>Schema</h2>
+<p>
+  <%=s['schema-doc'] %>
+</p>
+<% Object.keys(s['schema']).forEach( function( key ){
+     var schema = s['schema'][key];
+     var line = s.obj( schema );
+     var expl = s.schemaExplanations[ key ];  %>
+<ul>
+  <li>
+    <span class="key"><%=key%></span><span class="expl"><%-expl%></span><span class="line"><%-line%></span>
+  </li>
+</ul>
+<% });%>
+
+<% if( s['item-doc'] ) {%>
+  <p>
+    An element looks like this:
+  </p>
+  <pre>
+    <%- s['item-doc'] %>
+  </pre>
+<% } %>
+
+
+<% if( ( s['parents'] && Object.keys(s['parents']).length )
+    || (s['nested'] && s['nested'].length ) ){ %>
+  <h2>Other stores</h2>
+<% } %>
+
+<% if( s['parents'] && Object.keys(s['parents']).length ){ %> )
+  <h3>Parent stores </h3>
+  <p>
+    <span class="parents-title">Parent stores:
+      <% s['parents'].forEach( function( parent ){ %>
+        <span class="parent"><%=parent%></span>
+      <% }) %>
+    </span>
+  </p>
+
+<% } %>
+
+<% if( s['nested'] && s['nested'].length ){ %>
+  <h3>Joined stores </h3>
+    <% s['nested'].forEach( function( nested ){ %>
+      <p>
+        <span class="type"><%=nested.type%></span>:
+        <span class="foreign-store-data"><%=nested.foreignStoreData%></span>
+
+        <% if( nested.type == 'lookup' ){ %>
+          will contain a record from
+        <% } else { %>
+          will contain records from
+        <% } %>
+
+        <span class="foreign-store"><%=nested.foreignStore%></span>
+        where:
+        <% nested.conditions.forEach( function( lineCondition){ %>
+          <span class="foreign-property"><%=lineCondition.foreignProperty%></span>
+          is
+          <span class="local-property"><%=lineCondition.localProperty%></span>
+        <% }); %>
+      </p>
+    <% }) %>
+<% } %>
+
+<%if( s.backEnd && Object.keys( s.backEnd ).length ) {%>
+  <h2>Backend info</h2>
+  <p>
+    The store is based on SimpleDbLayer. Here is the layer's info:
+    <ul>
+      <li>
+        <p>
+          Collection name: <span class="collection-name"><%=s.backEnd.collectionName%></span>
+        </p>
+        <p>
+          Hard limit on GET queries: <span class="hard-limit"><%=s.backEnd.hardLimitOnQueries%></span>
+        </p>
+      </li>
+    </ul>
+  </p>
+
+  </p>
+<% } %>
+
+<h1>Other properties</h1>
+<ul>
+
+  <li>
+    <p>
+      Position: <span class="position"><%=s.position%></span>.
+      <%if( s.position ){ %>
+        <span class="position-explanation">Position can be set via position headers.</span>
+      <% } else { %>
+        <span class="position-explanation">There is no element positioning for this store.</span>
+      <% } %>
+    </p>
+  </li>
+
+  <li>
+    <p>
+      Schema strict on fetch: <span class="scrict-on-fetch"><%=s.strictSchemaOnFetch%></span>.
+      <%if( s.strictSchemaOnFetch ){ %>
+        <span class="strict-on-fetch-explanation">Will throw an error if the schema isn't satisfied for fetched records.</span>
+      <% } else { %>
+        <span class="strict-on-fecth-explanation">Will not apply schema to fetched records.</span>
+      <% } %>
+    </p>
+  </li>
+
+</ul>
+
+
+* methods
+ * ALL
+   * permissions-doc
+   * OKresponses { name: 'OK', status: 200, data: '[ item1, item2 ]', doc: `where item1, item2 are the full items` }
+   * errorResponses { name: 'NotImplementedError', status: 501, data: s['error-format-doc'], 'Content-type': 'text/html', doc: "The method requested isn't implemented" },
+   * incomingHeaders
+   * outgoingHeaders
+
+ * getQuery:
+ * search-doc (text)
+   * onlineSearchSchema (hash with items, like Schema)
+   * defaultSort ( hash, render with stringify )
+  * get
+    * onlySingleFields
+  * put
+    * onlySingleFields
+    * echo
+  * post
+    * echo
+  * delete
+    * echo
