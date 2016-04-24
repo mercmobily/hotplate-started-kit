@@ -1,15 +1,17 @@
 #!/bin/bash
 
-export NAME=`cat appName`
+export APPNAME=`cat appName`
 export FOREVERUSERNAME=`cat foreverUserName`
 
 # Get the current branch
 branch=`git rev-parse --abbrev-ref HEAD`
 
+echo Branch: $branch
+
 # Depending on the branch, it will assume it's in "development"
 # or in "production". If run on the same server, you can have them
 # both run at the same time on different ports
-if [ "$branch" == "master" ];then 
+if [ "$branch" == "master" ];then
   export NODE_ENV='development'
   export PORT='8081'
 else
@@ -17,9 +19,14 @@ else
   export PORT='8080'
 fi
 
+echo NODE_ENV: $NODE_ENV
+
 export DBHOST='localhost'
-export DBNAME="${NAME}_${NODE_ENV}"
+export DBNAME="${APPNAME}_${NODE_ENV}"
 export IPADDRESS='localhost'
 
 # Actually run the server
-/usr/bin/sudo -u $FOREVERUSERNAME forever start -a --watch --watchDirectory `pwd` --killSignal=SIGTERM -l /var/log/$NAME-forever.log -o /var/log/$NAME-out.log -e /var/log/$NAME-err.log server.js
+/usr/bin/sudo -u $FOREVERUSERNAME forever start -a --watch --watchDirectory `pwd` --killSignal=SIGTERM -l /var/log/$APPNAME-forever.log -o /var/log/$APPNAME-out.log -e /var/log/$APPNAME-err.log server.js
+
+
+#/usr/bin/sudo -u $FOREVERUSERNAME node server.js

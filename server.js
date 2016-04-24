@@ -30,6 +30,8 @@ var dummy
 // Make up the express object `app`
 var app = exports = module.exports = express();
 
+console.log("ENV WITHIN THE APP:", app.get('env') );
+
 // Basic app configuration
 // Meaningful variables: APPNAME, DBHOST, DBNAME, IPADDRESS, PORT
 // They all get meaninful defaults (even appName)

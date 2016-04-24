@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NAME=`cat appName`
+export APPNAME=`cat appName`
 
 # Get the current branch
 branch=`git rev-parse --abbrev-ref HEAD`
@@ -16,7 +16,7 @@ fi
 
 # Export the usual story
 export DBHOST='localhost'
-export DBNAME="${NAME}_tests"
+export DBNAME="${APPNAME}_tests"
 export IPADDRESS='localhost'
 export PORT='8082'
 
