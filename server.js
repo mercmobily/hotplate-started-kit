@@ -72,7 +72,7 @@ mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
   if( err ){
     hotplate.logger.error("Could not connect to the database. Aborting. Error: ", err );
     process.exit( 1 );
-
+  }
 
   // Basic Hotplate setup. `routeUrlsPrefix` nees to be set here
   // since it might be used in modules at load-time
@@ -114,8 +114,9 @@ mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
   // Various middleware. The usual suspects: static, favicon, logger,
   // bodyparser, cookieparser
   app.use('/', express.static(path.join(__dirname, 'public')));
+
   if( app.get( 'env' ) === 'development' ) app.use(logger('dev'));
-  app.use(favicon(__dirname + '/public/favicon.ico'));
+  //app.use(favicon(__dirname + '/public/favicon.ico'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser('woodchucks are nasty animals!!!'));
@@ -146,10 +147,10 @@ mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
       }
 
       // Routes for password recovery
-      app.post( '/auth/recover', main.recoverPostRoute );
+      app.post('/auth/recover', main.recoverPostRoute );
       app.get( '/auth/recoverPage/:token', main.recoverPageGetRoute );
       app.get( '/auth/recoverPageLanding/:token', main.recoverPageLandingGetRoute );
-      app.post( '/auth/resetPassword', main.resetPasswordPostRoute );
+      app.post('/auth/resetPassword', main.resetPasswordPostRoute );
 
       // Error route
       app.use( require('hotplate/core_modules/hotCoreError').hotCoreErrorHandler );
@@ -181,6 +182,13 @@ mongodb.MongoClient.connect( mongoUrl, {}, function( err, db ){
           server.listen( app.get('port'), app.get('ipAddress'), function(){
             console.log("Express server listening on port " + app.get('port'));
           });
+
+          // TODO: Remove, this is for debugging
+          var server = http.createServer( app );
+          server.listen( app.get('port'), '192.168.1.200', function(){
+            console.log("AND Express server listening on port " + app.get('port'));
+          });
+
         }
 
       });
